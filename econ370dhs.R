@@ -50,7 +50,10 @@ treedata <- dhs %>%
          v404, v409, v409a, v410, v411, v411a,
          v412a, v412c, v414e, v414f, v414g, v414h,
          v414i, v414j, v414k, v414l, v414m, v414n,
-         ) %>%  
+         v414o, v414p, v416, v504, v505, v506, v508,
+         v605, v613, v624, v704, v714, v716, v730,
+         v734a, v734b, v734f, v744a, v744b, v744c,
+         v744d, v744e, v746, m4, m18, m19, m45) %>%   # ~ 60 rn
   rename(haz = hw70, 
          age_months = hw1, 
          mob = b1, 
@@ -58,6 +61,7 @@ treedata <- dhs %>%
          sex = b4, 
          interval = b11, 
          mom_age = v012,
+         partner_age = v730,
          region = v024,
          urban_rural = v025,
          water_source = v113,
@@ -92,6 +96,35 @@ treedata <- dhs %>%
          other_fruits = v414l,
          organ_meat = v414m,
          fish = v414n,
+         legumes = v414o,
+         dairy = v414p,
+         oral_hydration = v416,  # knowledge of medical practices
+         living_with_partner = v504, # household arrangements (attention theory)
+         other_wives = v505,
+         wife_rank = v506,
+         yo_first_cohabitation = v508,
+         age_first_cohabitation = v511,
+         desire_more_children = v605,
+         ideal_num_children = v613,
+         unmet_contraceptive_need = v624,  # family planning/knowledge go together
+         husbands_vocation = v704,
+         working = v714, # figure out how to do years of education for the father
+         vocation = v716,
+         employer = v719, # fits into the Profs. Jakiela & Ozier paper, self-employment happier
+         healthcare_decisionmaker = v734a,
+         purchase_decisionmaker = v734b, # big purchases
+         money_decisionmaker = v743f,
+         beating_leaving = v744a, 
+         beating_neglect = v744b, # this seems related to child development in two ways
+         beating_argument = v744c,
+         beating_refusesex = v744d,
+         beating_burnedfood = v744e,
+         biggestearner = v746, # plausibly if the woman makes more..
+         breastfeeding_duration = m4,
+         birth_size = m18,
+         birth_weight = m19,
+         iron_supplement = m45,
+         
          
          homeowner = v745a,
          landowner = v745b,
