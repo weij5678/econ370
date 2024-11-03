@@ -51,9 +51,11 @@ treedata <- dhs %>%
          v412a, v412c, v414e, v414f, v414g, v414h,
          v414i, v414j, v414k, v414l, v414m, v414n,
          v414o, v414p, v416, v504, v505, v506, v508,
-         v605, v613, v624, v704, v714, v716, v730,
+         v605, v613, v624, v704, v714, v715, v716, v730,
          v734a, v734b, v734f, v744a, v744b, v744c,
-         v744d, v744e, v746, m4, m18, m19, m45) %>%   # ~ 60 rn
+         v744d, v744e, v746, m4, m18, m19, m45, h2,
+         h3, h4, s224b, s224ca, s224cb, s224cc,
+         s224cd, s224ce, ) %>%   # ~ 60 rn
   rename(haz = hw70, 
          age_months = hw1, 
          mob = b1, 
@@ -109,6 +111,7 @@ treedata <- dhs %>%
          unmet_contraceptive_need = v624,  # family planning/knowledge go together
          husbands_vocation = v704,
          working = v714, # figure out how to do years of education for the father
+         husband_education = v715,
          vocation = v716,
          employer = v719, # fits into the Profs. Jakiela & Ozier paper, self-employment happier
          healthcare_decisionmaker = v734a,
@@ -124,7 +127,15 @@ treedata <- dhs %>%
          birth_size = m18,
          birth_weight = m19,
          iron_supplement = m45,
-         
+         tuberculosis_vaccine = h2,
+         dtap_vaccine = h3,
+         polio_vaccine = h4,
+         hh_child_development = s224b,
+         reading_books = s224ca,
+         telling_stories = s224cb,
+         singing_songs = s224cc,
+         taking_walks = s224cd, 
+         counting_drawing_naming = s224ce,
          
          homeowner = v745a,
          landowner = v745b,
