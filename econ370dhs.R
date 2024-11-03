@@ -58,7 +58,7 @@ treedata <- dhs %>%
          s224cd, s224ce, v120, v121, v122, v124, v125,
          v131, v157, v158, ml101, v201, v206, v207,
          v384a, v384b, v384c, v393, v394, v501, v503, v621,
-         v627, v628) %>%   # ~ 60 rn
+         v627, v628) %>%   # ~ 100 at the moment
   rename(haz = hw70, 
          age_months = hw1, 
          mob = b1, 
@@ -94,7 +94,6 @@ treedata <- dhs %>%
          familyplanning_newsp = v384c,
          familyplanning_visit = v393,
          healthfacility_visit = v394,
-         
          toilet_shared = v160,
          fuel = v161,
          wealth_index = v190,
@@ -135,7 +134,6 @@ treedata <- dhs %>%
          unmet_contraceptive_need = v624,  # family planning/knowledge go together
          ideal_num_boys = v627,
          ideal_num_girls = v628,
-         
          husbands_vocation = v704,
          working = v714, # figure out how to do years of education for the father
          husband_education = v715,
@@ -163,8 +161,6 @@ treedata <- dhs %>%
          singing_songs = s224cc,
          taking_walks = s224cd, 
          counting_drawing_naming = s224ce,
-         
-         
          homeowner = v745a,
          landowner = v745b,
          child_wanted = v367,
