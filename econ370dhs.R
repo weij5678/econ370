@@ -20,6 +20,10 @@ library(rpart)
 library(rpart.plot)
 library(grf)
 
+#ridge & lasso
+library(glmnet)
+library(hdm)
+
 ######### INSERT PCA PACKAGE #######
 
 library(gitcreds)
@@ -34,7 +38,7 @@ senegal.dhs <- read_dta(paste0(mypath, "SNBR71DT/SNBR71DT/SNBR71FL.dta")) %>%
   filter(v135 == 1) # Usual resident or visitor of Senegal
 
 
-senegal.variables <- senegal.dhs %>% 
+senegal.data <- senegal.dhs %>% 
   select(hw70, hw1, bord, b0, b1, b2, b4, b11, 
          v012, v024, v025, v113, v116, v119, v133,
          v136, v151, v160, v161, v190, v212, v745a,
@@ -159,8 +163,39 @@ senegal.variables <- senegal.dhs %>%
          pob = m15
   )
 
+# make dummies for factor variables:
+factor_cols <- c("mob",
+                 "yob", 
+                 "sex",
+                 "bord",
+                 "region",
+                 "urban_rural",
+                 "water_source",
+                 "sanitation",
+                 "electricity",
+                 "household_head_sex",
+                 "toilet_shared",
+                 "fuel",
+                 "wealth_index",
+                 "homeowner",
+                 "landowner",
+                 "child_wanted",
+                 "pob",
+                 "twin",
+                 
+)
+
+senegal.data[factor_cols] <- lapply(senegal.data[factor_cols], as.character)
+senegal.data <- dummy_cols(senegal.data, select_columns = factor_cols, remove_selected_columns = TRUE)
+senegal.data[is.na(treedata)] <- 0
+
+
+
 
 # Save to CSV
-write.csv(dhs, "output1.csv", row.names=FALSE)
+# write.csv(dhs, "output1.csv", row.names=FALSE)
 
-# 'caseid', 'bidx',    'v413', 'v414a', 'v414b', 'v414c', 'v414d', 'v414e'
+##### RIDGE REGRESSION ----------------------------------
+
+ridge_low <- glmnet(X, Y, alpha = 0, lambda = 10^-3)
+
