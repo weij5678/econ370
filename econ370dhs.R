@@ -46,7 +46,11 @@ treedata <- dhs %>%
   select(hw70, hw1, bord, b0, b1, b2, b4, b11, 
          v012, v024, v025, v113, v116, v119, v133,
          v136, v151, v160, v161, v190, v212, v745a,
-         v745b, v367, m15) %>%  
+         v745b, v367, m15, v152, v153, v213, v218,
+         v404, v409, v409a, v410, v411, v411a,
+         v412a, v412c, v414e, v414f, v414g, v414h,
+         v414i, v414j, v414k, v414l, v414m, v414n,
+         ) %>%  
   rename(haz = hw70, 
          age_months = hw1, 
          mob = b1, 
@@ -61,11 +65,34 @@ treedata <- dhs %>%
          electricity = v119,
          mothers_education = v133,
          household_size = v136,
-         household_head_sex = v151,
+         household_head_sex = v151, # we should group the variables for the slides
+         household_head_age = v152,
+         telephone = v153,
          toilet_shared = v160,
          fuel = v161,
          wealth_index = v190,
          age_first_birth = v212,
+         currently_pregnant = v213,
+         number_living_children = v218,
+         currently_breastfeeding = v404,
+         plain_water = v409, # nutrition related variables
+         sugar_water = v409a,
+         juice = v410,
+         milk = v411, 
+         formula = v411a,
+         fortified_food = v412a,
+         soup_broth = v412c,
+         grain_foods = v414e,
+         tuber_foods = v414f,
+         eggs = v414g,
+         meat = v414h,
+         squash = v414i,
+         leafy_vegetables = v414j,
+         vitamin_a_fruits = v414k,
+         other_fruits = v414l,
+         organ_meat = v414m,
+         fish = v414n,
+         
          homeowner = v745a,
          landowner = v745b,
          child_wanted = v367,
@@ -76,4 +103,4 @@ treedata <- dhs %>%
 # Save to CSV
 write.csv(dhs, "output1.csv", row.names=FALSE)
 
-# 'caseid', 'bidx', 'v025', 'v190', 'v191', 'v106', 'v150', 'v151', 'v152', 'v153', 'v113', 'v116', 'v212', 'v213', 'v218', 'v220', 'v310', 'v311', 'v312', 'v313', 'v323', 'v323a', 'v325a', 'v327', 'v367', 'v372', 'v372a', 'v375a', 'v376', 'v376a', 'v3a00a', 'v3a00b', 'v3a00c', 'v3a00d', 'v3a00e', 'v3a00f', 'v3a00g', 'v3a00h', 'v3a00i', 'v3a00j', 'v3a00k', 'v3a00l', 'v3a00m', 'v3a00n', 'v3a00o', 'v393', 'v394', 'v395', 'v401', 'v404', 'v405', 'v406', 'v407', 'v408', 'v413', 'v414a', 'v414b', 'v414c', 'v414d', 'v414e'
+# 'caseid', 'bidx',    'v413', 'v414a', 'v414b', 'v414c', 'v414d', 'v414e'
