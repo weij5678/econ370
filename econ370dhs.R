@@ -55,7 +55,10 @@ treedata <- dhs %>%
          v734a, v734b, v734f, v744a, v744b, v744c,
          v744d, v744e, v746, m4, m18, m19, m45, h2,
          h3, h4, s224b, s224ca, s224cb, s224cc,
-         s224cd, s224ce, ) %>%   # ~ 60 rn
+         s224cd, s224ce, v120, v121, v122, v124, v125,
+         v131, v157, v158, ml101, v201, v206, v207,
+         v384a, v384b, v384c, v393, v394, v501, v503, v621,
+         v627, v628) %>%   # ~ 60 rn
   rename(haz = hw70, 
          age_months = hw1, 
          mob = b1, 
@@ -69,11 +72,29 @@ treedata <- dhs %>%
          water_source = v113,
          sanitation = v116,
          electricity = v119,
+         radio = v120,
+         television = v121,
+         refrigerator = v122, 
+         motorcycle = v124,
+         car_truck = v125,
+         ethnicity = v131,
          mothers_education = v133,
          household_size = v136,
          household_head_sex = v151, # we should group the variables for the slides
          household_head_age = v152,
          telephone = v153,
+         reading_newspaper = v157,
+         listening_radio = v158,
+         mosquito_net = ml101,
+         total_children = v201,
+         son_died = v206,
+         daughter_died = v207,
+         familyplanning_radio = v384a,
+         familyplanning_tv = v384b,
+         familyplanning_newsp = v384c,
+         familyplanning_visit = v393,
+         healthfacility_visit = v394,
+         
          toilet_shared = v160,
          fuel = v161,
          wealth_index = v190,
@@ -101,6 +122,8 @@ treedata <- dhs %>%
          legumes = v414o,
          dairy = v414p,
          oral_hydration = v416,  # knowledge of medical practices
+         current_marital = v501,
+         number_unions = v503,
          living_with_partner = v504, # household arrangements (attention theory)
          other_wives = v505,
          wife_rank = v506,
@@ -108,7 +131,11 @@ treedata <- dhs %>%
          age_first_cohabitation = v511,
          desire_more_children = v605,
          ideal_num_children = v613,
+         husband_desire_children = v621,
          unmet_contraceptive_need = v624,  # family planning/knowledge go together
+         ideal_num_boys = v627,
+         ideal_num_girls = v628,
+         
          husbands_vocation = v704,
          working = v714, # figure out how to do years of education for the father
          husband_education = v715,
@@ -136,6 +163,7 @@ treedata <- dhs %>%
          singing_songs = s224cc,
          taking_walks = s224cd, 
          counting_drawing_naming = s224ce,
+         
          
          homeowner = v745a,
          landowner = v745b,
