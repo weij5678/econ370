@@ -25,6 +25,7 @@ library(glmnet)
 library(hdm)
 
 ######### INSERT PCA PACKAGE #######
+#pca()
 
 library(gitcreds)
 # gitcreds_set()
