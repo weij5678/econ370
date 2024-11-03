@@ -164,6 +164,22 @@ senegal.data <- senegal.dhs %>%
          pob = m15
   )
 
+## drop observations with missing height-for-age z-scores
+senegal.data$haz <- as.numeric(senegal.data$haz)
+senegal.data <- filter(senegal.data, !is.na(haz) & haz!=9996 & haz!=9997 & haz!= 9998)
+
+## idiosyncratic cleaning
+
+## change age at time of survey to age at birth
+senegal.data$mom_age <- senegal.data$mom_age - (2014 - senegal.data$yob)
+
+## twin dummy
+senegal.data$twin = ifelse(senegal.data$b0 == 0, 0, 1)
+senegal.data  <- select(senegal.data, !b0)
+
+## birth interval cannot be NAN (first births), replace with median
+senegal.data$interval[is.na(senegal.data$interval)] <- median(senegal.data$interval, na.rm=TRUE)
+
 # make dummies for factor variables:
 factor_cols <- c("mob",
                  "yob", 
@@ -220,7 +236,7 @@ factor_cols <- c("mob",
                  "legumes",
                  "dairy",
                  "oral_hydration",
-                 "current_martial",
+                 "current_marital",
                  "living_with_partner",
                  "yo_first_cohabitation",
                  "husband_desire_children",
@@ -249,12 +265,12 @@ factor_cols <- c("mob",
                  "telling_stories",
                  "singing_songs",
                  "taking_walks",
-                 "counting_drawing_naming",
+                 "counting_drawing_naming"
 )
 
 senegal.data[factor_cols] <- lapply(senegal.data[factor_cols], as.character)
 senegal.data <- dummy_cols(senegal.data, select_columns = factor_cols, remove_selected_columns = TRUE)
-senegal.data[is.na(treedata)] <- 0
+senegal.data[is.na(senegal.data)] <- 0
 
 
 
