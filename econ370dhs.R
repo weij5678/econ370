@@ -275,10 +275,38 @@ senegal.data[is.na(senegal.data)] <- 0
 
 
 
-# Save to CSV
-# write.csv(dhs, "output1.csv", row.names=FALSE)
+##### PREPARE DATA --------------------------------------
+
+Y = senegal.data$haz
+
+X <- tibble(senegal.data, enumerator_dummies, strata_dummies) %>%
+  select(!c(literacy, enumerator, strata)) %>%
+  as.matrix()
+
+
+
+##### OLS BENCHMARK -------------------------------------
+
+
+
 
 ##### RIDGE REGRESSION ----------------------------------
 
+###### find out how to cross-validate ridge
+
 ridge_low <- glmnet(X, Y, alpha = 0, lambda = 10^-3)
+
+
+##### LASSO REGRESSION ----------------------------------
+
+##### RANDOM FOREST -------------------------------------
+
+##### GRADIENT-BOOSTED FOREST ---------------------------
+
+##### PRINCIPAL COMPONENT ANALYSIS  ---------------------
+
+
+
+
+
 
