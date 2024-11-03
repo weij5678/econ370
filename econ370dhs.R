@@ -25,6 +25,7 @@ library(glmnet)
 library(hdm)
 
 ######### INSERT PCA PACKAGE #######
+#pca()
 
 library(gitcreds)
 # gitcreds_set()
@@ -163,6 +164,22 @@ senegal.data <- senegal.dhs %>%
          pob = m15
   )
 
+## drop observations with missing height-for-age z-scores
+senegal.data$haz <- as.numeric(senegal.data$haz)
+senegal.data <- filter(senegal.data, !is.na(haz) & haz!=9996 & haz!=9997 & haz!= 9998)
+
+## idiosyncratic cleaning
+
+## change age at time of survey to age at birth
+senegal.data$mom_age <- senegal.data$mom_age - (2014 - senegal.data$yob)
+
+## twin dummy
+senegal.data$twin = ifelse(senegal.data$b0 == 0, 0, 1)
+senegal.data  <- select(senegal.data, !b0)
+
+## birth interval cannot be NAN (first births), replace with median
+senegal.data$interval[is.na(senegal.data$interval)] <- median(senegal.data$interval, na.rm=TRUE)
+
 # make dummies for factor variables:
 factor_cols <- c("mob",
                  "yob", 
@@ -173,6 +190,15 @@ factor_cols <- c("mob",
                  "water_source",
                  "sanitation",
                  "electricity",
+                 "radio",
+                 "television",
+                 "refrigerator",
+                 "motorcycle",
+                 "car_truck",
+                 "ethnicity",
+                 "telephone",
+                 "reading_newspaper",
+                 "listening_radio",
                  "household_head_sex",
                  "toilet_shared",
                  "fuel",
@@ -182,20 +208,105 @@ factor_cols <- c("mob",
                  "child_wanted",
                  "pob",
                  "twin",
-                 
+                 "mosquito_net",
+                 "familyplanning_radio",
+                 "familyplanning_tv",
+                 "familyplanning_newsp",
+                 "familyplanning_visit",
+                 "healthfacility_visit",
+                 "currently_pregnant",
+                 "currently_breastfeeding",
+                 "plain_water",
+                 "sugar_water",
+                 "juice",
+                 "milk",
+                 "formula",
+                 "fortified_food",
+                 "soup_broth",
+                 "grain_foods",
+                 "tuber_foods",
+                 "eggs",
+                 "meat",
+                 "squash",
+                 "leafy_vegetables",
+                 "vitamin_a_fruits",
+                 "other_fruits",
+                 "organ_meat",
+                 "fish",
+                 "legumes",
+                 "dairy",
+                 "oral_hydration",
+                 "current_marital",
+                 "living_with_partner",
+                 "yo_first_cohabitation",
+                 "husband_desire_children",
+                 "unmet_contraceptive_need",
+                 "husbands_vocation",
+                 "working",
+                 "vocation",
+                 "employer",
+                 "healthcare_decisionmaker",
+                 "purchase_decisionmaker",
+                 "money_decisionmaker",
+                 "beating_leaving",
+                 "beating_neglect",
+                 "beating_argument",
+                 "beating_refusesex",
+                 "beating_burnedfood",
+                 "biggestearner",
+                 "breastfeeding_duration",
+                 "birth_size",
+                 "iron_supplement",
+                 "tuberculosis_vaccine",
+                 "dtap_vaccine",
+                 "polio_vaccine",
+                 "hh_child_development",
+                 "reading_books",
+                 "telling_stories",
+                 "singing_songs",
+                 "taking_walks",
+                 "counting_drawing_naming"
 )
 
 senegal.data[factor_cols] <- lapply(senegal.data[factor_cols], as.character)
 senegal.data <- dummy_cols(senegal.data, select_columns = factor_cols, remove_selected_columns = TRUE)
-senegal.data[is.na(treedata)] <- 0
+senegal.data[is.na(senegal.data)] <- 0
 
 
 
 
-# Save to CSV
-# write.csv(dhs, "output1.csv", row.names=FALSE)
+##### PREPARE DATA --------------------------------------
+
+Y = senegal.data$haz
+
+X <- tibble(senegal.data, enumerator_dummies, strata_dummies) %>%
+  select(!c(literacy, enumerator, strata)) %>%
+  as.matrix()
+
+
+
+##### OLS BENCHMARK -------------------------------------
+
+
+
 
 ##### RIDGE REGRESSION ----------------------------------
 
+###### find out how to cross-validate ridge
+
 ridge_low <- glmnet(X, Y, alpha = 0, lambda = 10^-3)
+
+
+##### LASSO REGRESSION ----------------------------------
+
+##### RANDOM FOREST -------------------------------------
+
+##### GRADIENT-BOOSTED FOREST ---------------------------
+
+##### PRINCIPAL COMPONENT ANALYSIS  ---------------------
+
+
+
+
+
 
