@@ -23,26 +23,18 @@ library(grf)
 ######### INSERT PCA PACKAGE #######
 
 library(gitcreds)
-gitcreds_set()
+# gitcreds_set()
 
 mypath <- "~/ECON370/ECON370dhs/econ370 project/"
 
 
-dhs <- read_dta(paste0(mypath, "SNBR71DT/SNBR71DT/SNBR71FL.dta")) %>% 
+senegal.dhs <- read_dta(paste0(mypath, "SNBR71DT/SNBR71DT/SNBR71FL.dta")) %>% 
   filter(!is.na(midx)) %>% 
-  filter(b5 == 1) %>% 
-  filter(v135 == 1)
+  filter(b5 == 1) %>% # Child is alive
+  filter(v135 == 1) # Usual resident or visitor of Senegal
 
-##    region of Kenya (v024), urban/rural, water source, sanitation facilities, 
-##    electricity, mother's education in years (numeric), household size, 
-##    sex of the household head, whether the toilet facilities are shared, 
-##    cooking fuel, wealth index, mother's age at first birth, 
-##    whether the mother owns her home (alone or with a partner), 
-##    whether the mother owns her land (alone or with a partner), 
-##    whether the child was wanted by mother, place of birth (e.g. hospital, home)
-##    
 
-treedata <- dhs %>% 
+senegal.variables <- senegal.dhs %>% 
   select(hw70, hw1, bord, b0, b1, b2, b4, b11, 
          v012, v024, v025, v113, v116, v119, v133,
          v136, v151, v160, v161, v190, v212, v745a,
@@ -50,9 +42,9 @@ treedata <- dhs %>%
          v404, v409, v409a, v410, v411, v411a,
          v412a, v412c, v414e, v414f, v414g, v414h,
          v414i, v414j, v414k, v414l, v414m, v414n,
-         v414o, v414p, v416, v504, v505, v506, v508,
-         v605, v613, v624, v704, v714, v715, v716, v730,
-         v734a, v734b, v734f, v744a, v744b, v744c,
+         v414o, v414p, v416, v504, v505, v506, v508,v511,
+         v605, v613, v624, v704, v714, v715, v716, v719, v730,
+         v743a, v743b, v743f, v744a, v744b, v744c,
          v744d, v744e, v746, m4, m18, m19, m45, h2,
          h3, h4, s224b, s224ca, s224cb, s224cc,
          s224cd, s224ce, v120, v121, v122, v124, v125,
@@ -139,8 +131,8 @@ treedata <- dhs %>%
          husband_education = v715,
          vocation = v716,
          employer = v719, # fits into the Profs. Jakiela & Ozier paper, self-employment happier
-         healthcare_decisionmaker = v734a,
-         purchase_decisionmaker = v734b, # big purchases
+         healthcare_decisionmaker = v743a,
+         purchase_decisionmaker = v743b, # big purchases
          money_decisionmaker = v743f,
          beating_leaving = v744a, 
          beating_neglect = v744b, # this seems related to child development in two ways
